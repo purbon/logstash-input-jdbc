@@ -169,12 +169,6 @@ module LogStash::PluginMixins::Jdbc
       @database.pool.connection_validation_timeout = @jdbc_validation_timeout
     end
     @database.fetch_size = @jdbc_fetch_size unless @jdbc_fetch_size.nil?
-    begin
-      @database.test_connection
-    rescue Sequel::DatabaseConnectionError => e
-      #TODO return false and let the plugin raise a LogStash::ConfigurationError
-      raise e
-    end
     @database.sql_log_level = @sql_log_level.to_sym
     @database.logger = @logger
     if @lowercase_column_names
